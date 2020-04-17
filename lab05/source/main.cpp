@@ -1,58 +1,73 @@
 #include "res.h"
 #include <iostream>
 #include <Windows.h>
-#include <string>
-#include <time.h>
-#include <cmath>
-#include <math.h>
-#include <cstdlib>
-#include <ctime>
 
-using namespace std;
-int x1, x2 = 0;
+//int x, y = 0;
+HBITMAP hBitmap;
+BITMAP bitmapInformation = {};
+RECT bitmapRectangle = {};
 
 
+VOID ResizeWindowRectangle(HWND hwnd, RECT Rectangle)
+{
+  AdjustWindowRect(&Rectangle, GetWindowLongW(hwnd, GWL_STYLE), TRUE);
 
+  SetWindowPos(hwnd, 0,
+    Rectangle.left, Rectangle.top,
+    Rectangle.right - Rectangle.left, Rectangle.bottom - Rectangle.top,
+    SWP_NOMOVE | SWP_NOZORDER);
+}
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  static int xClick;
-  static int yClick;
-
   switch (message)
   {
   case WM_INITDIALOG:
-    return FALSE;
-
-  case WM_CREATE:
+    hBitmap = (HBITMAP)LoadImageW(GetModuleHandleW(NULL), L"./../source/mountains.bmp",
+      IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+    GetObjectW(hBitmap, sizeof(bitmapInformation), &bitmapInformation);
     break;
 
   case WM_PAINT:
     HDC hDC;
     hDC = GetDC(hwnd);
-    BitBlt(hDC, 0, 0, 800, 600, GetDC(0), x1, x2, SRCCOPY);
+    /*BitBlt(hDC, 0, 0, 800, 600, GetDC(0), x, y, SRCCOPY);
     SelectObject(hDC, GetStockObject(ANSI_VAR_FONT));
     SetTextColor(hDC, RGB(255, 0, 0));
     TextOut(hDC, 0, 0, TEXT("Text output to client area."), 27);
     ReleaseDC(hwnd, hDC);
+    break;*/
+
+    HDC hdcBitmap;
+    hdcBitmap = CreateCompatibleDC(hDC);
+    SelectObject(hdcBitmap, hBitmap);
+
+    if (TRUE)
+    {
+      RECT rWndRect;
+      GetClientRect(hwnd, &rWndRect);
+      StretchBlt(hDC, rWndRect.left, rWndRect.top, rWndRect.right - rWndRect.left, rWndRect.bottom - rWndRect.top,
+        hdcBitmap, 0, 0, bitmapInformation.bmWidth, bitmapInformation.bmHeight, SRCCOPY);
+    }
+
+    DeleteDC(hdcBitmap);
+    ReleaseDC(hwnd, hDC);
     break;
 
-  case WM_MOVE:
+  case WM_SIZING:
   {
-    x1 = LOWORD(lParam);
-    x2 = HIWORD(lParam);
-
-    return 0;
+    bitmapRectangle = { 0, 0, WMSZ_RIGHT, WMSZ_BOTTOM };
+    ResizeWindowRectangle(hwnd, bitmapRectangle);
   }
   break;
 
 
   case WM_CLOSE:
+    DeleteObject(hBitmap);
     DestroyWindow(hwnd); // destroying window
     PostQuitMessage(0); // put in the loop information about ending application
     return TRUE;
 
-    return TRUE;
   }
   return FALSE;
 }
