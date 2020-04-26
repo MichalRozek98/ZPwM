@@ -20,44 +20,44 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 
   switch (uMsg)
   {
-    case WM_INITDIALOG:
+  case WM_INITDIALOG:
+  {
+    HICON hIcon = LoadIconA(l_hInstance, MAKEINTRESOURCE(IDI_KAJKO));
+    SendMessage(hwndDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+    HMENU hMenu = LoadMenu(g_hInstance, MAKEINTRESOURCE(IDR_KAJKO));
+    SetMenu(hwndDlg, hMenu);
+    return FALSE;
+  }
+
+  case WM_COMMAND:
+    switch (HIWORD(wParam))
     {
-      HICON hIcon = LoadIconA(l_hInstance, MAKEINTRESOURCE(IDI_KAJKO));
-      SendMessage(hwndDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
-
-      HMENU hMenu = LoadMenu(g_hInstance, MAKEINTRESOURCE(IDR_KAJKO));
-      SetMenu(hwndDlg, hMenu);
-      return FALSE;
-    }
-
-    case WM_COMMAND:
-      switch (HIWORD(wParam))
+    case BN_CLICKED:
+      switch (LOWORD(wParam))
       {
-        case BN_CLICKED:
-          switch (LOWORD(wParam))
-          {
-            case IDC_KAJKO:
-              MessageBoxA(0, opis_kajko.c_str(), "Kajko - wikipedia", MB_OK);
+      case IDC_KAJKO:
+        MessageBoxA(0, opis_kajko.c_str(), "Kajko - wikipedia", MB_OK);
 
-            return TRUE;
-          }
-        }
-
-      return FALSE;
-
-    
-    case WM_CLOSE:
-
-      if (if_close == true) {
-        DestroyWindow(hwndDlg);
-        PostQuitMessage(0);
         return TRUE;
       }
-      else
-      {
-        DestroyWindow(hwndDlg);
-        if_close = true;
-      }
+    }
+
+    return FALSE;
+
+
+  case WM_CLOSE:
+
+    if (if_close == true) {
+      DestroyWindow(hwndDlg);
+      PostQuitMessage(0);
+      return TRUE;
+    }
+    else
+    {
+      DestroyWindow(hwndDlg);
+      if_close = true;
+    }
 
     return TRUE;
   }
@@ -70,46 +70,46 @@ INT_PTR CALLBACK DialogProc2(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 
   switch (uMsg)
   {
-    case WM_INITDIALOG:
+  case WM_INITDIALOG:
+  {
+
+    HICON hIcon = LoadIconA(l_hInstance, MAKEINTRESOURCE(IDI_KOKOSZ));
+    SendMessage(hwndDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+    HMENU hMenu = LoadMenu(l_hInstance, MAKEINTRESOURCE(IDR_KOKOSZ));
+    SetMenu(hwndDlg, hMenu);
+
+    return FALSE;
+  }
+
+  case WM_COMMAND:
+    switch (HIWORD(wParam))
     {
-
-      HICON hIcon = LoadIconA(l_hInstance, MAKEINTRESOURCE(IDI_KOKOSZ));
-      SendMessage(hwndDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
-
-      HMENU hMenu = LoadMenu(l_hInstance, MAKEINTRESOURCE(IDR_KOKOSZ));
-      SetMenu(hwndDlg, hMenu);
-
-      return FALSE;
-    }
-
-    case WM_COMMAND:
-      switch (HIWORD(wParam))
+    case BN_CLICKED:
+      switch (LOWORD(wParam))
       {
-        case BN_CLICKED:
-          switch (LOWORD(wParam))
-          {
-          case IDC_KOKOSZ:
-            MessageBoxA(0, opis_kokosz.c_str(), "Kokosz - wikipedia", MB_OK);
+      case IDC_KOKOSZ:
+        MessageBoxA(0, opis_kokosz.c_str(), "Kokosz - wikipedia", MB_OK);
 
-            return TRUE;
-          }
-      }
-
-     return FALSE;
-
-    case WM_CLOSE:
-      if (if_close == true) {
-        DestroyWindow(hwndDlg);
-        PostQuitMessage(0);
         return TRUE;
       }
-      else
-      {
-        DestroyWindow(hwndDlg);
-        if_close = true;
-      }
+    }
 
-     return TRUE;
+    return FALSE;
+
+  case WM_CLOSE:
+    if (if_close == true) {
+      DestroyWindow(hwndDlg);
+      PostQuitMessage(0);
+      return TRUE;
+    }
+    else
+    {
+      DestroyWindow(hwndDlg);
+      if_close = true;
+    }
+
+    return TRUE;
   }
   return FALSE;
 }

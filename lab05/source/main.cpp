@@ -2,7 +2,6 @@
 #include <iostream>
 #include <Windows.h>
 
-//int x, y = 0;
 HBITMAP hBitmap;
 BITMAP bitmapInformation = {};
 RECT bitmapRectangle = {};
