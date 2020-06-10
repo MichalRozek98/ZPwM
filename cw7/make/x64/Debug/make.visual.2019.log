@@ -1,0 +1,6 @@
+﻿F:\Visual Studio 2019\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+F:\Visual Studio 2019\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (lab01.vcxproj, lab02.vcxproj, lab04.vcxproj, lab05.vcxproj, template.vcxproj, zadanie_1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  main.cpp
+D:\wszystko\studia EiT\VI sem\ZPwM - wszystko\GitRepoZPwM\ZPwM\cw7\source\main.cpp(61,29): warning C4018: '<': signed/unsigned mismatch
+D:\wszystko\studia EiT\VI sem\ZPwM - wszystko\GitRepoZPwM\ZPwM\cw7\source\main.cpp(63,94): warning C4244: '=': conversion from 'double' to 'CHAR', possible loss of data
+  make.visual.2019.vcxproj -> D:\wszystko\studia EiT\VI sem\ZPwM - wszystko\GitRepoZPwM\ZPwM\cw7\\bin\cw7.exe
